@@ -1,0 +1,98 @@
+﻿@model UpAndRun.Models.Product
+
+@{
+    var title = "Delete Product";
+}
+
+<form method="post" enctype="multipart/form-data" asp-controller="Product" asp-action="DeleteProductPost">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-info pl-3">@title</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" asp-for="Name" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea type="text" asp-for="Description" class="form-control summernote" disabled></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" asp-for="Price" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Category"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" asp-for="Category.CategoryName" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ApplicationType"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" asp-for="ApplicationType.ApplicationName" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-danger w-100"> <i class="fas fa-trash-alt"></i>Delete</button>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-dark w-100" asp-controller="Product" asp-action="IndexProduct"> <i class="fas fa-arrow-left"></i> Go Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @if (Model.Id != 0)
+                {
+                    <img src="@WebConstant.ImagePath@Model.ImageUrl" alt="" class="img-fluid rounded" />
+                }
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script>
+
+        $(document).ready(function () {
+            $(".summernote").summernote({
+                height: 250,
+            });
+            $(".summernote").summernote("disable");
+        });
+    </script>
+
+}
+

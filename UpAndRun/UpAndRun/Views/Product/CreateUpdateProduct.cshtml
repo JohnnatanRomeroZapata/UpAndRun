@@ -1,0 +1,141 @@
+﻿@model UpAndRun.Models.ViewModels.ProductVM
+
+@{
+    var title = "Create Product";
+}
+
+<form method="post" enctype="multipart/form-data" asp-controller="Product" asp-action="CreateUpdateProduct">
+
+    @if (Model.Product.Id != 0)
+    {
+        title = "Update Product";
+        <input type="hidden" asp-for="Product.Id" />
+    }
+
+
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-info pl-3">@title</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" asp-for="Product.Name" class="form-control" />
+                        <span asp-validation-for="Product.Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea type="text" asp-for="Product.Description" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Product.Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" asp-for="Product.Price" class="form-control" />
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.ImageUrl"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.Category.CategoryName"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Product.CategoryId" asp-items="@Model.CategorySelectList" class="form-control">
+                            <option selected disabled> -- Select Category --</option>
+                        </select>
+                        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.ApplicationType.ApplicationName"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Product.ApplicationTypeId" asp-items="@Model.ApplicationTypeSelectList" class="form-control">
+                            <option selected disabled> -- Select Application Type --</option>
+                        </select>
+                        <span asp-validation-for="Product.ApplicationTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            @if (Model.Product.Id != 0)
+                            {
+                                <button class="btn btn-warning w-100"> <i class="fas fa-pen"></i> Update </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-success w-100" onclick="return validateInput()"> <i class="fas fa-plus"></i> Create </button>
+                            }
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-dark w-100" asp-controller="Product" asp-action="IndexProduct"> <i class="fas fa-arrow-left"></i> Go Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @if (Model.Product.Id != 0)
+                {
+                    <img src="@WebConstant.ImagePath@Model.Product.ImageUrl" alt="" class="img-fluid rounded" />
+                }
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script>
+
+        $(document).ready(function () {
+            $(".summernote").summernote({
+                height: 250
+            });
+        });
+
+        function validateInput() {
+
+            if ($("uploadBox").val() == "") {
+                Swal.fire(
+                    'Error',
+                    'Please upload an image',
+                    'error'
+                )
+                return false;
+            }
+
+            return true;
+        }
+
+    </script>
+
+}
+

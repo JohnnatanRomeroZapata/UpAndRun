@@ -1,0 +1,50 @@
+﻿@model IEnumerable<UpAndRun.Models.ApplicationType>
+
+@{
+    ViewData["Title"] = "IndexApplicationType";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-6">
+            <h2>Application Type List</h2>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <a class=" btn btn-info" asp-controller="ApplicationType" asp-action="CreateApplicationType"> <i class="fas fa-plus"></i> Create Application Type</a>
+        </div>
+    </div>
+
+    <hr />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Id</th>
+                    <th scope="col" class="text-center">Application Type</th>
+                    <th scope="col" class="text-center">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var applicationType in Model)
+                {
+                    <tr>
+                        <th class="text-center w-25">@applicationType.Id</th>
+                        <td class="text-center w-25">@applicationType.ApplicationName</td>
+                        <td class="text-center w-25">
+                            <a class="btn btn-warning" asp-controller="ApplicationType" asp-action="UpdateApplicationType" asp-route-Id="@applicationType.Id"> <i class="fas fa-pen"></i> Update</a>
+                            <a class="btn btn-danger" asp-controller="ApplicationType" asp-action="DeleteApplicationType" asp-route-Id="@applicationType.Id"> <i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h2>There are no application types</h2>
+    }
+</div>
+

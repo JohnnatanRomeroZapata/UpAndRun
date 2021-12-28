@@ -1,0 +1,54 @@
+﻿@model IEnumerable<UpAndRun.Models.Product>
+
+@{
+    ViewData["Title"] = "IndexProduct";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-6">
+            <h2>Product List</h2>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <a class=" btn btn-info" asp-controller="Product" asp-action="CreateUpdateProduct"> <i class="fas fa-plus"></i> Create Product</a>
+        </div>
+    </div>
+
+    <hr />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Name</th>
+                    <th scope="col" class="text-center">Price</th>
+                    <th scope="col" class="text-center">Category Type</th>
+                    <th scope="col" class="text-center">Application Type</th>
+                    <th scope="col" class="text-center">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td class="text-center">@product.Name</td>
+                        <td class="text-center">@product.Price</td>
+                        <td class="text-center">@product.Category.CategoryName</td>
+                        <td class="text-center">@product.ApplicationType.ApplicationName</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning" asp-controller="Product" asp-action="CreateUpdateProduct" asp-route-Id="@product.Id"> <i class="fas fa-pen"></i> Update </a>
+                            <a class="btn btn-danger" asp-controller="Product" asp-action="DeleteProduct" asp-route-Id="@product.Id"> <i class="fas fa-trash-alt"></i> Delete </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h2>There are no products</h2>
+    }
+</div>
+
